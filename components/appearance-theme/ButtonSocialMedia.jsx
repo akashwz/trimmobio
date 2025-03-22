@@ -1,4 +1,14 @@
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import ColorPicker from "../Color/ColorPicker";
 
 const ButtonSocialMedia = ({
@@ -10,6 +20,7 @@ const ButtonSocialMedia = ({
   handleCloseColor,
   handleSocialMediaButton,
 }) => {
+  console.log(changeAppearanceData?.icon_type, "changeAppearanceData?.icon_type");
   return (
     <div className="mt-4">
       <Accordion expanded={expandedButtonSocialMedia} onChange={handleChangeButtonSocialMedia}>
@@ -51,6 +62,18 @@ const ButtonSocialMedia = ({
               Set social media Icon as a button
             </label>
           </div>
+          <div className="mt-2">Direction</div>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={changeAppearanceData?.icon_type}
+              onChange={(e) => handleSocialMediaButton(e.target.value, "icon_type")}
+            >
+              <FormControlLabel label="Icon fill" control={<Radio />} value="fill" />
+              <FormControlLabel label="Icon border" control={<Radio />} value="border" />
+            </RadioGroup>
+          </FormControl>
           {changeAppearanceData?.social_media_show_as_a_button === true && (
             <div>
               <div className="mt-2">Fill</div>
@@ -197,202 +220,200 @@ const ButtonSocialMedia = ({
                   <div className="h-[50px] w-[170px] border-[1px] border-[#212529] shadow-custom rounded-full m-[6px] cursor-pointer"></div>
                 </div>
               </div>
-              <Divider
-                style={{
-                  marginTop: "16px",
-                }}
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="relative">
-                  <div>
-                    <div className="mt-2">Button Color</div>
-                  </div>
-                  <div className="flex gap-3 mt-2">
-                    <div
-                      className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
-                      style={{
-                        backgroundColor: changeAppearanceData?.socialMediaButtonColor,
-                      }}
-                      onClick={() => setShowColorPicker("social_media_button_color")}
-                    ></div>
-                    <input
-                      type="text"
-                      value={changeAppearanceData?.socialMediaButtonColor}
-                      onChange={(e) =>
-                        handleSocialMediaButton(e.target.value, "socialMediaButtonColor")
-                      }
-                      className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
-                      onClick={() => setShowColorPicker("social_media_button_color")}
-                    />
-                  </div>
-                  {showColorPicker === "social_media_button_color" && (
-                    <ColorPicker
-                      handleChange={(color) =>
-                        handleSocialMediaButton(color, "socialMediaButtonColor")
-                      }
-                      setting={changeAppearanceData?.socialMediaButtonColor}
-                      handleCloseColor={handleCloseColor}
-                    />
-                  )}
-                </div>
-                <div className="relative">
-                  <div>
-                    <div className="mt-2">Button Text Color</div>
-                  </div>
-                  <div className="flex gap-3 mt-2">
-                    <div
-                      className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
-                      style={{
-                        backgroundColor: changeAppearanceData?.socialMediaButtonFontColor,
-                      }}
-                      onClick={() => setShowColorPicker("social_media_button_font_color")}
-                    ></div>
-
-                    <input
-                      type="text"
-                      value={changeAppearanceData?.socialMediaButtonFontColor}
-                      onChange={(e) =>
-                        handleSocialMediaButton(e.target.value, "socialMediaButtonFontColor")
-                      }
-                      className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
-                      onClick={() => setShowColorPicker("social_media_button_font_color")}
-                    />
-                  </div>
-                  {showColorPicker === "social_media_button_font_color" && (
-                    <ColorPicker
-                      handleChange={(color) =>
-                        handleSocialMediaButton(color, "socialMediaButtonFontColor")
-                      }
-                      setting={changeAppearanceData?.socialMediaButtonFontColor}
-                      handleCloseColor={handleCloseColor}
-                    />
-                  )}
-                </div>
+            </div>
+          )}
+          <Divider
+            style={{
+              marginTop: "16px",
+            }}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="relative">
+              <div>
+                <div className="mt-2">Button Color</div>
               </div>
-
-              {changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-3" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "outline-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "outline-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "outline-3" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "fill-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "fill-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "fill-3" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-3" ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-                  <div className="relative">
-                    <div>Button Hover Background Color</div>
-
-                    <div className="flex gap-3 mt-2">
-                      <div
-                        className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
-                        style={{
-                          backgroundColor: changeAppearanceData?.socialMediaButtonHoverBg,
-                        }}
-                        onClick={() => setShowColorPicker("social_media_button_hover_bg")}
-                      ></div>
-                      <input
-                        type="text"
-                        value={changeAppearanceData?.socialMediaButtonHoverBg}
-                        onChange={(e) =>
-                          handleSocialMediaButton(e.target.value, "socialMediaButtonHoverBg")
-                        }
-                        className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
-                        onClick={() => setShowColorPicker("social_media_button_hover_bg")}
-                      />
-                    </div>
-                    {showColorPicker === "social_media_button_hover_bg" && (
-                      <ColorPicker
-                        handleChange={(color) =>
-                          handleSocialMediaButton(color, "socialMediaButtonHoverBg")
-                        }
-                        setting={changeAppearanceData?.socialMediaButtonHoverBg}
-                        handleCloseColor={handleCloseColor}
-                      />
-                    )}
-                  </div>
-                  <div className="relative">
-                    <div>Button Hover Text Color</div>
-
-                    <div className="flex gap-3 mt-2">
-                      <div
-                        className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
-                        style={{
-                          backgroundColor: changeAppearanceData?.socialMediaButtonHoverFontColor,
-                        }}
-                        onClick={() => setShowColorPicker("social_media_button_hover_font_color")}
-                      ></div>
-                      <input
-                        type="text"
-                        value={changeAppearanceData?.socialMediaButtonHoverFontColor}
-                        onChange={(e) =>
-                          handleSocialMediaButton(e.target.value, "socialMediaButtonHoverFontColor")
-                        }
-                        className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
-                        onClick={() => setShowColorPicker("social_media_button_hover_font_color")}
-                      />
-                    </div>
-                    {showColorPicker === "social_media_button_hover_font_color" && (
-                      <ColorPicker
-                        handleChange={(color) =>
-                          handleSocialMediaButton(color, "socialMediaButtonHoverFontColor")
-                        }
-                        setting={changeAppearanceData?.socialMediaButtonHoverFontColor}
-                        handleCloseColor={handleCloseColor}
-                      />
-                    )}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-3" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-1" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-2" ||
-              changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-3" ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="relative">
-                    <div>Shadow Color</div>
-
-                    <div className="flex gap-3 mt-2">
-                      <div
-                        className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
-                        style={{
-                          backgroundColor: changeAppearanceData?.socialMediaShadowColor,
-                        }}
-                        onClick={() => setShowColorPicker("social_media_shadow_color")}
-                      ></div>
-                      <input
-                        type="text"
-                        value={changeAppearanceData?.socialMediaShadowColor}
-                        onChange={(e) =>
-                          handleSocialMediaButton(e.target.value, "socialMediaShadowColor")
-                        }
-                        className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] mb-2 rounded-[6px] space-x-2 text-sm font-medium table-text peer"
-                        onClick={() => setShowColorPicker("social_media_shadow_color")}
-                      />
-                    </div>
-                    {showColorPicker === "social_media_shadow_color" && (
-                      <ColorPicker
-                        handleChange={(color) =>
-                          handleSocialMediaButton(color, "socialMediaShadowColor")
-                        }
-                        setting={changeAppearanceData?.socialMediaShadowColor}
-                        handleCloseColor={handleCloseColor}
-                      />
-                    )}
-                  </div>
-                </div>
-              ) : (
-                ""
+              <div className="flex gap-3 mt-2">
+                <div
+                  className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
+                  style={{
+                    backgroundColor: changeAppearanceData?.socialMediaButtonColor,
+                  }}
+                  onClick={() => setShowColorPicker("social_media_button_color")}
+                ></div>
+                <input
+                  type="text"
+                  value={changeAppearanceData?.socialMediaButtonColor}
+                  onChange={(e) =>
+                    handleSocialMediaButton(e.target.value, "socialMediaButtonColor")
+                  }
+                  className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
+                  onClick={() => setShowColorPicker("social_media_button_color")}
+                />
+              </div>
+              {showColorPicker === "social_media_button_color" && (
+                <ColorPicker
+                  handleChange={(color) => handleSocialMediaButton(color, "socialMediaButtonColor")}
+                  setting={changeAppearanceData?.socialMediaButtonColor}
+                  handleCloseColor={handleCloseColor}
+                />
               )}
             </div>
+            <div className="relative">
+              <div>
+                <div className="mt-2">Button Text Color</div>
+              </div>
+              <div className="flex gap-3 mt-2">
+                <div
+                  className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
+                  style={{
+                    backgroundColor: changeAppearanceData?.socialMediaButtonFontColor,
+                  }}
+                  onClick={() => setShowColorPicker("social_media_button_font_color")}
+                ></div>
+
+                <input
+                  type="text"
+                  value={changeAppearanceData?.socialMediaButtonFontColor}
+                  onChange={(e) =>
+                    handleSocialMediaButton(e.target.value, "socialMediaButtonFontColor")
+                  }
+                  className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
+                  onClick={() => setShowColorPicker("social_media_button_font_color")}
+                />
+              </div>
+              {showColorPicker === "social_media_button_font_color" && (
+                <ColorPicker
+                  handleChange={(color) =>
+                    handleSocialMediaButton(color, "socialMediaButtonFontColor")
+                  }
+                  setting={changeAppearanceData?.socialMediaButtonFontColor}
+                  handleCloseColor={handleCloseColor}
+                />
+              )}
+            </div>
+          </div>
+
+          {changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-3" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "outline-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "outline-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "outline-3" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "fill-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "fill-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "fill-3" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-3" ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              <div className="relative">
+                <div>Button Hover Background Color</div>
+
+                <div className="flex gap-3 mt-2">
+                  <div
+                    className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
+                    style={{
+                      backgroundColor: changeAppearanceData?.socialMediaButtonHoverBg,
+                    }}
+                    onClick={() => setShowColorPicker("social_media_button_hover_bg")}
+                  ></div>
+                  <input
+                    type="text"
+                    value={changeAppearanceData?.socialMediaButtonHoverBg}
+                    onChange={(e) =>
+                      handleSocialMediaButton(e.target.value, "socialMediaButtonHoverBg")
+                    }
+                    className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
+                    onClick={() => setShowColorPicker("social_media_button_hover_bg")}
+                  />
+                </div>
+                {showColorPicker === "social_media_button_hover_bg" && (
+                  <ColorPicker
+                    handleChange={(color) =>
+                      handleSocialMediaButton(color, "socialMediaButtonHoverBg")
+                    }
+                    setting={changeAppearanceData?.socialMediaButtonHoverBg}
+                    handleCloseColor={handleCloseColor}
+                  />
+                )}
+              </div>
+              <div className="relative">
+                <div>Button Hover Text Color</div>
+
+                <div className="flex gap-3 mt-2">
+                  <div
+                    className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
+                    style={{
+                      backgroundColor: changeAppearanceData?.socialMediaButtonHoverFontColor,
+                    }}
+                    onClick={() => setShowColorPicker("social_media_button_hover_font_color")}
+                  ></div>
+                  <input
+                    type="text"
+                    value={changeAppearanceData?.socialMediaButtonHoverFontColor}
+                    onChange={(e) =>
+                      handleSocialMediaButton(e.target.value, "socialMediaButtonHoverFontColor")
+                    }
+                    className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] rounded-[6px] space-x-2 text-sm font-medium table-text peer"
+                    onClick={() => setShowColorPicker("social_media_button_hover_font_color")}
+                  />
+                </div>
+                {showColorPicker === "social_media_button_hover_font_color" && (
+                  <ColorPicker
+                    handleChange={(color) =>
+                      handleSocialMediaButton(color, "socialMediaButtonHoverFontColor")
+                    }
+                    setting={changeAppearanceData?.socialMediaButtonHoverFontColor}
+                    handleCloseColor={handleCloseColor}
+                  />
+                )}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "hard-shadow-3" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-1" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-2" ||
+          changeAppearanceData?.selectedButtonSocialMedia === "soft-shadow-3" ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="relative">
+                <div>Shadow Color</div>
+
+                <div className="flex gap-3 mt-2">
+                  <div
+                    className="w-[35px] shadow h-[35px] rounded-[6px] cursor-pointer"
+                    style={{
+                      backgroundColor: changeAppearanceData?.socialMediaShadowColor,
+                    }}
+                    onClick={() => setShowColorPicker("social_media_shadow_color")}
+                  ></div>
+                  <input
+                    type="text"
+                    value={changeAppearanceData?.socialMediaShadowColor}
+                    onChange={(e) =>
+                      handleSocialMediaButton(e.target.value, "socialMediaShadowColor")
+                    }
+                    className="cursor-pointer flex items-center border main-border-color w-full pl-1 py-[9px] mb-2 rounded-[6px] space-x-2 text-sm font-medium table-text peer"
+                    onClick={() => setShowColorPicker("social_media_shadow_color")}
+                  />
+                </div>
+                {showColorPicker === "social_media_shadow_color" && (
+                  <ColorPicker
+                    handleChange={(color) =>
+                      handleSocialMediaButton(color, "socialMediaShadowColor")
+                    }
+                    setting={changeAppearanceData?.socialMediaShadowColor}
+                    handleCloseColor={handleCloseColor}
+                  />
+                )}
+              </div>
+            </div>
+          ) : (
+            ""
           )}
         </AccordionDetails>
       </Accordion>

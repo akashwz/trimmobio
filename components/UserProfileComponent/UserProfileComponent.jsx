@@ -8,6 +8,7 @@ import SvgSection from "@/components/SvgSection/SvgSection";
 import { Transition } from "@/controller/Transitions";
 import { GET_BIO } from "@/redux/action.type";
 import { clearBio, getAnalytics } from "@/redux/Action/auth.action";
+import { fontMap } from "@/utils/fonts";
 import { Backdrop, CircularProgress, Dialog } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
@@ -254,11 +255,15 @@ const User = ({ params, fontName }) => {
   const isGif = appreance?.bg_image?.endsWith(".gif");
   const isImage = appreance?.bg_image?.match(/\.(jpeg|jpg|png|webp)$/);
 
+  const fontClass = fontMap[appreance?.typography_font]?.fontFamily || "";
+  // const fontClass = appreance?.typography_font;
+
   return (
     <div
       className="themeSection_font"
       style={{
-        "--theme-font": appreance?.typography_font,
+        // "--theme-font": appreance?.typography_font,
+        "--theme-font": fontClass,
       }}
     >
       {loader && (
@@ -894,13 +899,35 @@ const User = ({ params, fontName }) => {
                                           handleButtonClick(item?.url, bioData?._id, item?._id)
                                         }
                                       >
-                                        <SvgSection
+                                        {/* <SvgSection
                                           svgContent={item?.logo}
                                           fill={`${
                                             isHovered === item?._id
                                               ? appreance?.socialMediaButtonHoverFontColor
                                               : appreance?.socialMediaButtonFontColor
                                           }`}
+                                          className={`${
+                                            item.widget_name !== "social media" && "rounded-full"
+                                          } h-8 w-8 flex justify-center items-center`}
+                                          width="25px"
+                                          height="25px"
+                                        /> */}
+                                        <SvgSection
+                                          svgContent={item?.logo}
+                                          stroke={
+                                            appreance?.icon_type === "border"
+                                              ? isHovered === item?._id
+                                                ? appreance?.socialMediaButtonHoverFontColor
+                                                : appreance?.socialMediaButtonFontColor
+                                              : "none"
+                                          }
+                                          fill={
+                                            appreance?.icon_type === "fill"
+                                              ? isHovered === item?._id
+                                                ? appreance?.socialMediaButtonHoverFontColor
+                                                : appreance?.socialMediaButtonFontColor
+                                              : "none"
+                                          }
                                           className={`${
                                             item.widget_name !== "social media" && "rounded-full"
                                           } h-8 w-8 flex justify-center items-center`}

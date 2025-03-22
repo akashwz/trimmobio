@@ -37,6 +37,7 @@ export const checkUserName = (data) => {
           payload: userName?.data,
         });
       }
+      console.log(userName?.data, "userName?.data=-=->>");
     } catch (error) {
       ToastNotification.error(error);
       dispatch({

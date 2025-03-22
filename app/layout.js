@@ -8,12 +8,18 @@ import { PersistGate } from "redux-persist/integration/react";
 import { X } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { getUser } from "@/redux/Action/auth.action";
+import { getCookie } from "cookies-next/client";
 
 function RootComponent({ children }) {
   const dispatch = useDispatch();
 
+  const checkToken = getCookie("token");
+  console.log(checkToken, "checkToken");
+
   useEffect(() => {
-    dispatch(getUser());
+    if (checkToken) {
+      dispatch(getUser());
+    }
   }, [dispatch]);
 
   return (

@@ -41,15 +41,22 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
-  const userNameRegex = /^[a-z0-9-!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]{5,60}$/;
+  // const userNameRegex = /^[a-z0-9-!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]{5,60}$/;
+  const userNameRegex = /^[a-z0-9-]{5,60}$/;
   const [userNameError, setUserNameError] = useState(false);
+  const [userNameErrorContent, setUserNameErrorContent] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const handleBlurUsername = async (e) => {
     const value = e.target.value;
     if (userNameRegex.test(value)) {
       setUserNameError(false);
+      setUserNameErrorContent(userNames?.data?.message);
+
       setLoading(true);
+
+      dispatch(checkUserName(e.target.value));
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -57,9 +64,11 @@ const Register = () => {
 
       if (userNames?.data?.username === false) {
         setUserNameError(true);
+        setUserNameErrorContent(userNames?.data?.message);
       }
     } else {
       setUserNameError(true);
+      setUserNameErrorContent("Username is invalid format.");
     }
   };
 
@@ -134,11 +143,11 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    if (debouncedUserName && !userNameError) {
-      dispatch(checkUserName(debouncedUserName));
-    }
-  }, [debouncedUserName]);
+  // useEffect(() => {
+  //   if (debouncedUserName && !userNameError) {
+  //     dispatch(checkUserName(debouncedUserName));
+  //   }
+  // }, [debouncedUserName]);
 
   useEffect(() => {
     if (userNames?.data?.username) {
@@ -221,7 +230,7 @@ const Register = () => {
 
         {userNameError && (
           <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-red-500">
-            Username is not valid
+            {userNameErrorContent}
           </p>
         )}
 
@@ -230,7 +239,7 @@ const Register = () => {
             Checking availability...
           </p>
         )}
-
+        {/* 
         {!userNameError &&
           userName?.length > 0 &&
           !loading &&
@@ -238,14 +247,14 @@ const Register = () => {
             <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-red-500">
               Username is not available.
             </p>
-          )}
+          )} */}
 
         {!userNameError &&
           userName?.length > 0 &&
           !loading &&
           userNames?.data?.username === true && (
             <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-green-500">
-              Username is available.
+              {userNameErrorContent}
             </p>
           )}
       </div>

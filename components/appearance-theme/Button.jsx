@@ -240,6 +240,21 @@ const Button = ({
                 <div className="h-[50px] w-[170px] border-[1px] border-[#212529] shadow-custom rounded-full m-[6px] cursor-pointer"></div>
               </div>
             </div>
+
+            {/* <div className="mt-2">Special</div>
+            <div className="flex flex-wrap mt-2 gap-2 sm:gap-6 md:gap-8 lg:gap-4">
+              <div
+                className={`${
+                  changeAppearanceData?.selectedButton === "special-button-1"
+                    ? "border-2 border-[#222]"
+                    : "border-2 border-transparent"
+                } p-1`}
+                onClick={() => handleChangeButtonAlignment("special-button-1", "selectedButton")}
+              >
+                <button className="wavy-button h-[50px] w-[180px] bg-black"></button>
+              </div>
+            </div> */}
+
             <Divider
               style={{
                 marginTop: "16px",

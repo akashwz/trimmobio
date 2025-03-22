@@ -721,3 +721,35 @@ input[type="radio"]:checked {
   } */
 
 
+  .wavy-button {
+    @apply bg-black text-white font-semibold py-3 px-6 text-center;
+    position: relative;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    /* color: white; */
+    border-radius: 12px;
+  }
+  
+  .wavy-button::before,
+  .wavy-button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-size: 20px 10px;
+    background-repeat: repeat-x;
+  }
+  
+  .wavy-button::before {
+    top: -4px;
+    background-image: radial-gradient(circle at 10px 17px, black 10px, white 10px);
+  }
+  
+  .wavy-button::after {
+    bottom: -4px;
+    background-image: radial-gradient(circle at 10px -7px, black 10px, white 10px);
+  }

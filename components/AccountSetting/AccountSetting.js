@@ -95,34 +95,43 @@ const AccountSetting = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const userNameRegex = /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{4,60}$/;
+  // const userNameRegex = /^[a-z0-9-!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]{5,60}$/;
+  const userNameRegex = /^[a-z0-9-]{5,60}$/;
   const debouncedUserName = useDebounce(formData?.username, 1000);
   const [userNameError, setUserNameError] = useState(false);
+  const [userNameErrorContent, setUserNameErrorContent] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleBlurUsername = async (e) => {
     const value = e.target.value;
     if (userNameRegex.test(value)) {
       setUserNameError(false);
+      setUserNameErrorContent(userNames?.data?.message);
       setLoading(true);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setLoading(false);
 
+      dispatch(checkUserName(e.target.value));
+
+      console.log(userNames?.data, "userNames?.data?.username-=->>");
+
       if (userNames?.data?.username === false) {
         setUserNameError(true);
+        setUserNameErrorContent(userNames?.data?.message);
       }
     } else {
       setUserNameError(true);
+      setUserNameErrorContent("Username is invalid format.");
     }
   };
 
-  useEffect(() => {
-    if (debouncedUserName && !userNameError) {
-      dispatch(checkUserName(debouncedUserName));
-    }
-  }, [debouncedUserName]);
+  // useEffect(() => {
+  //   if (debouncedUserName && !userNameError) {
+  //     dispatch(checkUserName(debouncedUserName));
+  //   }
+  // }, [debouncedUserName]);
 
   const togglePasswordVisibility = (type) => {
     if (type === "current") {
@@ -178,7 +187,7 @@ const AccountSetting = () => {
               <input
                 type="text"
                 id="username"
-                value={formData.username}
+                value={formData.username.toLowerCase()}
                 onChange={handleChange}
                 placeholder="Enter your username"
                 className="w-full mt-2 bg-transparent rounded-full border border-black focus:border-black focus:bg-white focus:ring-0 text-sm outline-none text-gray-700 py-1 px-4 leading-8 transition-colors duration-200 ease-in-out peer"
@@ -187,7 +196,7 @@ const AccountSetting = () => {
               <p className="w-full text-sm mt-1 text-gray-400">{url}</p>
               {userNameError && (
                 <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-red-500">
-                  Username is not valid
+                  {userNameErrorContent}
                 </p>
               )}
 
@@ -200,18 +209,9 @@ const AccountSetting = () => {
               {!userNameError &&
                 formData?.username?.length > 0 &&
                 !loading &&
-                userNames?.data?.username === false && (
-                  <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-red-500">
-                    Username is not available.
-                  </p>
-                )}
-
-              {!userNameError &&
-                formData?.username?.length > 0 &&
-                !loading &&
                 userNames?.data?.username === true && (
                   <p className="w-full flex mx-auto text-sm text-left mt-0.5 text-green-500">
-                    Username is available.
+                    {userNameErrorContent}
                   </p>
                 )}
             </div>

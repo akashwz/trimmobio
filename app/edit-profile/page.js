@@ -103,7 +103,14 @@ const EditProfile = () => {
     container_padding: 20,
     container_image: "https://cdn.trimmo.bio/trimmo_bio/bg-cover-image.webp",
     button_container: false,
-    typography_font: "roboto-slab",
+    typography_font: "Roboto Slab, serif",
+    selectedButtonSocialMedia: "fill-2",
+    socialMediaButtonColor: "#ffffff",
+    socialMediaButtonFontColor: "#000000",
+    socialMediaButtonHoverBg: "#000000",
+    socialMediaButtonHoverFontColor: "#ffffff",
+    socialMediaShadowColor: "#000000",
+    icon_type: "fill",
   });
 
   const [activeTabPreview, setActiveTabPreview] = useState("Links");

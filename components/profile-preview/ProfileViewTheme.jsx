@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import LinksButton from "../LinksButton/LinksButton";
 import ThumbView from "../LinksButton/ThumbView";
 import SvgSection from "../SvgSection/SvgSection";
+import { fontMap } from "@/utils/fonts";
 
 const ProfileViewTheme = ({
   socialMedia,
@@ -61,6 +62,9 @@ const ProfileViewTheme = ({
   const isGif = changeAppearanceData?.bg_image?.endsWith(".gif");
   const isImage = changeAppearanceData?.bg_image?.match(/\.(jpeg|jpg|png|webp)$/);
 
+  const fontClass = fontMap[fontName]?.fontFamily || "";
+  // const fontClass = fontName;
+
   return (
     <div
       className={`flex items-center justify-center border-black border-[3px] border-solid rounded-[15px] bg-cover bg-no-repeat bg-center themeSection_font`}
@@ -71,7 +75,8 @@ const ProfileViewTheme = ({
         padding: changeAppearanceData?.container_padding
           ? `${changeAppearanceData?.container_padding}px`
           : "0px",
-        "--theme-font": `${changeAppearanceData?.typography_font}`,
+        // "--theme-font": `${changeAppearanceData?.typography_font}`,
+        "--theme-font": fontClass,
       }}
     >
       <div
@@ -97,11 +102,22 @@ const ProfileViewTheme = ({
                 ? `-101px 40px 35px ${changeAppearanceData?.basicColor}`
                 : "none",
               position: changeAppearanceData?.background_box_shadow_spread ? "relative" : "",
+              // background:
+              //   changeAppearanceData?.selectedBg === "flat_colour"
+              //     ? changeAppearanceData?.basicColor
+              //     : changeAppearanceData?.selectedBg === "gradient"
+              //     ? `linear-gradient(${gradientTo}, ${fromColor}, ${viaColor}, ${toColor})`
+              //     : "none",
               background:
                 changeAppearanceData?.selectedBg === "flat_colour"
                   ? changeAppearanceData?.basicColor
                   : changeAppearanceData?.selectedBg === "gradient"
                   ? `linear-gradient(${gradientTo}, ${fromColor}, ${viaColor}, ${toColor})`
+                  : changeAppearanceData?.selectedBg === "image" && changeAppearanceData?.bg_image
+                  ? changeAppearanceData?.bg_image.endsWith(".mp4") ||
+                    changeAppearanceData?.bg_image.endsWith(".webm")
+                    ? "none" // Video will be rendered separately
+                    : `url(${changeAppearanceData?.bg_image})`
                   : "none",
             }}
           >
@@ -112,7 +128,7 @@ const ProfileViewTheme = ({
                 loop
                 muted
                 playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+                className="absolute top-0 left-0 w-full h-[100vh] object-cover z-[-1]"
               >
                 <source src={changeAppearanceData?.bg_image} type="video/webm" />
                 Your browser does not support the video tag.
@@ -120,22 +136,22 @@ const ProfileViewTheme = ({
             )}
 
             {/* Background GIF */}
-            {changeAppearanceData?.selectedBg === "image" && isGif && (
+            {/* {changeAppearanceData?.selectedBg === "image" && isGif && (
               <img
                 src={changeAppearanceData?.bg_image}
                 alt="Background GIF"
                 className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
               />
-            )}
+            )} */}
 
             {/* Background Image */}
-            {changeAppearanceData?.selectedBg === "image" && isImage && (
+            {/* {changeAppearanceData?.selectedBg === "image" && isImage && (
               <img
                 src={changeAppearanceData?.bg_image}
                 alt="Background Image"
                 className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
               />
-            )}
+            )} */}
             <div
               className={`relative ${
                 changeAppearanceData?.cover_image_show === false && "top-[60px]"
@@ -616,11 +632,20 @@ const ProfileViewTheme = ({
                             >
                               <SvgSection
                                 svgContent={obj?.logo}
-                                fill={`${
-                                  isHovered === obj?._id
-                                    ? changeAppearanceData?.socialMediaButtonHoverFontColor
-                                    : changeAppearanceData?.socialMediaButtonFontColor
-                                }`}
+                                stroke={
+                                  changeAppearanceData?.icon_type === "border"
+                                    ? isHovered === obj?._id && obj?.widget_name === "social media"
+                                      ? changeAppearanceData?.socialMediaButtonHoverFontColor
+                                      : changeAppearanceData?.socialMediaButtonFontColor
+                                    : "none"
+                                }
+                                fill={
+                                  changeAppearanceData?.icon_type === "fill"
+                                    ? isHovered === obj?._id && obj?.widget_name === "social media"
+                                      ? changeAppearanceData?.socialMediaButtonHoverFontColor
+                                      : changeAppearanceData?.socialMediaButtonFontColor
+                                    : "none"
+                                }
                                 className={`${
                                   obj.widget_name !== "social media" && "rounded-full"
                                 } h-8 w-8 flex justify-center items-center`}

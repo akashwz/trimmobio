@@ -249,17 +249,28 @@ const ThumbView = ({
                           <>
                             {item?.widget_name === "social media" ? (
                               <SvgSection
-                                svgContent={item?.logo}
+                                svgContent={obj?.logo}
+                                stroke={
+                                  changeAppearanceData?.icon_type === "border"
+                                    ? isHovered === item?._id &&
+                                      item?.widget_name === "social media"
+                                      ? changeAppearanceData?.socialMediaButtonHoverFontColor
+                                      : changeAppearanceData?.socialMediaButtonFontColor
+                                    : "none"
+                                }
                                 fill={
-                                  isHovered === item?._id && item?.widget_name === "social media"
-                                    ? changeAppearanceData?.buttonHoverFontColor
-                                    : ""
+                                  changeAppearanceData?.icon_type === "fill"
+                                    ? isHovered === item?._id &&
+                                      item?.widget_name === "social media"
+                                      ? changeAppearanceData?.socialMediaButtonHoverFontColor
+                                      : changeAppearanceData?.socialMediaButtonFontColor
+                                    : "none"
                                 }
                                 className={`${
-                                  item.widget_name !== "social media" && "rounded-full"
-                                } h-8 w-8 ml-3`}
-                                width="30px"
-                                height="30px"
+                                  obj.widget_name !== "social media" && "rounded-full"
+                                } h-8 w-8 flex justify-center items-center`}
+                                width="25px"
+                                height="25px"
                               />
                             ) : (
                               <img
